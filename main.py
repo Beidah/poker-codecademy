@@ -158,15 +158,63 @@ class Game:
             self.player.add_card(self.deck.draw())
 
     def show_cards(self):
+        self.print_dealer()
+        print("------------------")
+        self.print_player()
+
+    def print_dealer(self):
         print("Dealer hand:")
         print(self.dealer)
         print("Value:", self.dealer.value)
-        print("------------------")
+
+    def print_player(self):
         print("Player hand:")
         print(self.player)
         print("Value:", self.player.value)
 
+    def play(self):
+        while self.player.value < 21:
+            self.print_player()
+            answer = input("Hit (h), Stand (s), or Quit (q)? ")
+            if answer == "h":
+                self.player.add_card(self.deck.draw())
+            elif answer == "s":
+                break
+            elif answer == "q":
+                quit()
+
+        self.print_player()
+        if self.player.value == 21:
+            print("Blackjack!")
+            return True
+        elif self.player.value > 21:
+            print("Bust!")
+            return False
+        else:
+            while self.dealer.value < 17:
+                self.print_dealer()
+                print("Dealer hits!")
+                self.dealer.add_card(self.deck.draw())
+
+        print("Dealer stays.")
+        self.print_dealer()
+        if self.dealer.value > 21:
+            print("Dealer bust!")
+            return True
+
+        return self.player.value > self.dealer.value
+
 
 if __name__ == "__main__":
-    game = Game()
-    game.show_cards()
+    while True:
+        game = Game()
+        game.print_dealer()
+        print("------------------")
+        if game.play():
+            print("Player wins!")
+        else:
+            print("Dealer wins!")
+
+        answer = input("Play again? (y/n) ")
+        if answer == "n":
+            break
