@@ -55,16 +55,13 @@ class Value(OrderedEnum):
         return "<%s.%s>" % (self.__class__.__name__, self._name_)
 
     def __str__(self) -> str:
-        if self.value == 1:
-            return "A"
-        elif self.value == 11:
-            return "J"
-        elif self.value == 12:
-            return "Q"
-        elif self.value == 13:
-            return "K"
-        else:
-            return str(self.value)
+        value_map = {
+            Value.ACE: "A",
+            Value.JACK: "J",
+            Value.QUEEN: "Q",
+            Value.KING: "K",
+        }
+        return value_map.get(self, str(self.value))
 
 
 class Suit(Enum):
@@ -77,15 +74,14 @@ class Suit(Enum):
         return "<%s.%s>" % (self.__class__.__name__, self._name_)
 
     def __str__(self) -> str:
-        match self:
-            case Suit.SPADES:
-                return "♠"
-            case Suit.HEARTS:
-                return "♥"
-            case Suit.DIAMONDS:
-                return "♦"
-            case Suit.CLUBS:
-                return "♣"
+        suit_symbols = {
+            Suit.SPADES: "♠",
+            Suit.HEARTS: "♥",
+            Suit.DIAMONDS: "♦",
+            Suit.CLUBS: "♣"
+        }
+
+        return suit_symbols[self]
 
 
 class Card:
