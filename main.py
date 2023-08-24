@@ -196,6 +196,7 @@ class Game:
                 print("Dealer hits!")
                 self.dealer.add_card(self.deck.draw())
 
+        self.print_dealer()
         print("Dealer stays.")
         self.print_dealer()
         if self.dealer.value > 21:
